@@ -9,7 +9,7 @@ using Toybox.Attention as Att;
 
 class WhereAmIView extends Ui.View {
 
-   	var myMessage = "--";
+    var myMessage = "--";
 
     function onShow() {
         update();
@@ -42,27 +42,26 @@ class WhereAmIView extends Ui.View {
     const L = 25;
 
     function osmCallback(code, data) {
-    	if (code == 200) {
-    		Att.playTone(Att.TONE_MSG);
-    		
-	        var m = data["display_name"];
-	
-	        m = decodeHTML(m);
-	        m = fixUnknownChars(m);
-	        m = breakupLine(m);
-	        message(m);
-	
-    	} else {
-    		Att.playTone(Att.TONE_ERROR);
-    		if (code == Comm.UNKNOWN_ERROR) {
-	    		message("No connection");    		
-    		} else if (code == Comm.BLE_CONNECTION_UNAVAILABLE) {
-    			message("Bluetooth connection unavailable");
-    		} else {
-    			message("Connection error: " + code);
-    		}
-    	}
-	    UI.requestUpdate();
+        if (code == 200) {
+            Att.playTone(Att.TONE_MSG);
+
+            var m = data["display_name"];
+
+            m = decodeHTML(m);
+            m = fixUnknownChars(m);
+            m = breakupLine(m);
+            message(m);
+        } else {
+            Att.playTone(Att.TONE_ERROR);
+            if (code == Comm.UNKNOWN_ERROR) {
+                message("No connection");
+            } else if (code == Comm.BLE_CONNECTION_UNAVAILABLE) {
+                message("Bluetooth connection unavailable");
+            } else {
+                message("Connection error: " + code);
+            }
+        }
+        UI.requestUpdate();
     }
 
     function decodeHTML(m) {
@@ -74,11 +73,10 @@ class WhereAmIView extends Ui.View {
     }
     
     function fixUnknownChars(m) {
-    	m = replace(m, "İ", "I");
-		m = replace(m, "ı", "i");
-		m = replace(m, "ğ", "g");
-    
-    	return m;
+        m = replace(m, "İ", "I");
+        m = replace(m, "ı", "i");
+        m = replace(m, "ğ", "g");
+        return m;
     }
 
     function replace(m, from, to) {
@@ -126,8 +124,8 @@ class WhereAmIView extends Ui.View {
         dc.clear();
 
         dc.drawText(
-        	dc.getWidth()/2, 
-        	dc.getHeight()/2,
+            dc.getWidth()/2,
+            dc.getHeight()/2,
             Graphics.FONT_TINY, myMessage,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
@@ -135,7 +133,7 @@ class WhereAmIView extends Ui.View {
 
     function onLayout(dc) {
     }
-    
+
     function onHide() {
     }
 
